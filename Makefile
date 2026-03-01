@@ -27,9 +27,9 @@ docker-run: ## Run the Docker image (port 8000)
 	@docker run -p 8000:8000 -p 9090:9090 -e LITELLM_BASE_URL=http:\/\/localhost:8081 -e LITELLM_API_KEY="ThisIsAFakeKey" $(DOCKER_IMAGE)
 
 .PHONY: deploy
-deploy: docker-build ## Build and deploy to KIND cluster
+deploy: docker-build ## Build and deploy to KIND cluster via Helm
 	@echo "Loading image into KIND cluster $(KIND_CLUSTER)..."
 	kind load docker-image $(DOCKER_IMAGE) --name $(KIND_CLUSTER)
 	@echo "Deploying to Kubernetes..."
-	kubectl apply -f kube/
+	helm upgrade --install $(BINARY_NAME) chart/ -f chart/values-secret.yaml --namespace mcp --create-namespace
 	@echo "✅ Deployed to KIND cluster"

@@ -202,10 +202,7 @@ __marimo__/
 # Claude Code
 .claude/
 
-# Kubernetes — secrets and local certificate/key files
-kube/secret.yaml
-kube/*.pem
-kube/*.key
-kube/*.crt
+# Helm — local secret values (never commit)
+chart/values-secret.yaml
 
 .DS_Store

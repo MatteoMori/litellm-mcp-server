@@ -89,15 +89,15 @@ make docker-run     # runs on port 8000
 
 The Dockerfile uses `python:3.14-alpine` with `uv` for dependency management.
 
-### Kubernetes
+### Kubernetes (Helm)
 
-Manifests live in `kube/`. The Makefile `deploy` target builds the image, loads it into a KIND cluster named `homelab`, and applies all manifests.
+A Helm chart lives in `chart/`. The Makefile `deploy` target builds the image, loads it into a KIND cluster named `homelab`, and runs `helm upgrade --install`.
 
 ```bash
 make deploy
 ```
 
-Copy `kube/secret.yaml.example` → `kube/secret.yaml` and fill in credentials before deploying.
+Pass secrets via `--set` flags or a custom values file. See `chart/values.yaml` for all configurable values.
 
 ## API Documentation
 
