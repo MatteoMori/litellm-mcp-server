@@ -9,7 +9,7 @@ on:
       - main
 
 env:
-  DOCKER_IMAGE: matteomori/litellm-mcp-server
+  DOCKER_IMAGE: matteomori14/litellm-mcp-server
 
 jobs:
   build-and-push:
