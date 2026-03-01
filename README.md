@@ -202,3 +202,7 @@ Key findings:
 | Per-user spend breakdown | 🚧 Planned |
 | Per-key spend breakdown | 🚧 Planned |
 | MCP authentication | 🚧 Planned |
+
+---
+
+> This project is not affiliated with, endorsed by, or sponsored by [BerriAI](https://github.com/BerriAI/litellm). "LiteLLM" is a trademark of its respective owner and is used here for descriptive purposes only.
