@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: litellm-mcp-server 
+  namespace: mcp
+  labels:
+    app: litellm-mcp-server 
+spec:
+  selector:
+    matchLabels:
+      app: litellm-mcp-server 
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: litellm-mcp-server 
+    spec:
+      serviceAccountName: litellm-mcp-server
+      containers:
+        - name: litellm-mcp-server
+          image: litellm-mcp-server:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - secretRef:
+                name: litellm-mcp-server-secret

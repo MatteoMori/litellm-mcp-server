@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "litellm-mcp-server"
+version = "0.1.0"
+description = "A read-only MCP server for querying LiteLLM proxies"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.10"
+dependencies = [
+    "fastmcp>=3.0.2",
+    "httpx>=0.28.1",
+    "pydantic-settings>=2.13.1",
+    "python-dotenv>=1.0.0",
+]
+
+[project.urls]
+Repository = "https://github.com/MatteoMori/litellm-mcp-server"
