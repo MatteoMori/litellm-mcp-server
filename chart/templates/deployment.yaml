@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "chart.fullname" . }}
+  labels:
+    {{- include "chart.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "chart.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "chart.fullname" . }}
+    spec:
+      serviceAccountName: {{ include "chart.fullname" . }}
+      containers:
+        - name: {{ include "chart.fullname" . }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+              name: http
+            - containerPort: {{ .Values.metrics.port }}
+              name: metrics
+          envFrom:
+            - secretRef:
+                name: {{ include "chart.fullname" . }}-secret

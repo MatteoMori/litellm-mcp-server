@@ -1,6 +1,7 @@
 from mcp_instance import mcp
 from http_client import http
 from helpers import fetch_teams_lookup
+from litellm_mcp_server.metrics.metrics import * # Our prometheus metrics
 
 @mcp.tool
 def get_users_list() -> dict:
@@ -9,6 +10,8 @@ def get_users_list() -> dict:
       - fetch all pages
       - lookup team names for each user and include them in the response
     """
+    TOOL_CALLS.labels(tool_name='get_users_list').inc()
+
     all_users = []
     page = 1
     page_size = 100

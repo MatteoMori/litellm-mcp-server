@@ -1,0 +1,22 @@
+replicaCount: 1
+
+image:
+  repository: litellm-mcp-server
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  port: 8000
+
+metrics:
+  port: 9090
+
+secret:
+  litellmBaseUrl: ""
+  litellmApiKey: ""
+
+serviceMonitor:
+  enabled: true
+  interval: 30s
+  labels:
+    release: prometheus

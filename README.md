@@ -25,6 +25,7 @@ Give your AI agent read-only visibility into your [LiteLLM](https://docs.litellm
     - [Docker](#docker)
     - [Kubernetes](#kubernetes)
   - [Example prompt](#example-prompt)
+  - [📊 Grafana Dashboard](#-grafana-dashboard)
   - [Project status](#project-status)
 
 ---
@@ -128,31 +129,36 @@ make docker-run
 
 The image is built on `python:3.14-alpine` and managed with `uv`. Environment variables are passed at runtime via `-e` flags or an env file.
 
-### Kubernetes
+### Kubernetes (Helm)
 
-Manifests live in `kube/`. The default setup targets a KIND cluster named `homelab`, but any cluster works.
+A Helm chart lives in `chart/`. The default setup targets a KIND cluster named `homelab`, but any cluster works.
 
-**1. Create your secret**
-
-```bash
-cp kube/secret.yaml.example kube/secret.yaml
-```
-
-Populate with base64-encoded values:
-
-```yaml
-data:
-  LITELLM_BASE_URL: <base64-encoded-value>
-  LITELLM_API_KEY: <base64-encoded-value>
-```
-
-**2. Deploy**
+**1. Deploy**
 
 ```bash
 make deploy
 ```
 
-This builds the Docker image, loads it into the KIND cluster, and applies all manifests in `kube/`.
+This builds the Docker image, loads it into the KIND cluster, and runs `helm upgrade --install` into the `mcp` namespace.
+
+**2. Pass secrets at install time**
+
+```bash
+helm upgrade --install litellm-mcp-server chart/ \
+  --namespace mcp --create-namespace \
+  --set secret.litellmBaseUrl=http://litellm:8081 \
+  --set secret.litellmApiKey=your-admin-key
+```
+
+**3. Enable ServiceMonitor (optional)**
+
+```bash
+helm upgrade --install litellm-mcp-server chart/ \
+  --namespace mcp --create-namespace \
+  --set serviceMonitor.enabled=true
+```
+
+See `chart/values.yaml` for all configurable values.
 
 ---
 
@@ -186,6 +192,16 @@ Key findings:
 - Admins team uses a keyless service account pattern: svc-admin has no user_id, making individual
   usage attribution impossible.
 ```
+
+---
+
+## 📊 Grafana Dashboard
+
+A pre-built Grafana dashboard is included in [`dashboard/grafana.json`](dashboard/grafana.json). 
+
+![example](./images/demo/grafana-dash.png)
+
+<br>
 
 ---
 
