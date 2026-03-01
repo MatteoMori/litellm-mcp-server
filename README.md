@@ -25,6 +25,7 @@ Give your AI agent read-only visibility into your [LiteLLM](https://docs.litellm
     - [Docker](#docker)
     - [Kubernetes](#kubernetes)
   - [Example prompt](#example-prompt)
+  - [📊 Grafana Dashboard](#-grafana-dashboard)
   - [Project status](#project-status)
 
 ---
@@ -186,6 +187,16 @@ Key findings:
 - Admins team uses a keyless service account pattern: svc-admin has no user_id, making individual
   usage attribution impossible.
 ```
+
+---
+
+## 📊 Grafana Dashboard
+
+A pre-built Grafana dashboard is included in [`dashboard/grafana.json`](dashboard/grafana.json). 
+
+![example](./images/demo/grafana-dash.png)
+
+<br>
 
 ---
 

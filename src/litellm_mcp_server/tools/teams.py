@@ -2,6 +2,7 @@ from mcp_instance import mcp
 from fastmcp.utilities.logging import get_logger
 from http_client import http
 from helpers import fetch_teams_lookup
+from litellm_mcp_server.metrics.metrics import * # Our prometheus metrics
 
 logger = get_logger(__name__)
 
@@ -9,6 +10,8 @@ logger = get_logger(__name__)
 @mcp.tool
 def get_teams_list() -> dict:
     """Return a list of all teams in the LiteLLM server."""
+    TOOL_CALLS.labels(tool_name='get_teams_list').inc()
+
     response = http.get("/team/list")
     response.raise_for_status()
     data = response.json()
@@ -25,6 +28,7 @@ def get_team_spend_info(team_name: str, start_date: str, end_date: str) -> dict:
     - start_date: start date for the spend info ( format: YYYY-MM-DD )
     - end_date: end date for the spend info ( format: YYYY-MM-DD )
     """
+    TOOL_CALLS.labels(tool_name='get_team_spend_info').inc()
 
     # resolve team name to team ID
     teams_lookup = fetch_teams_lookup()

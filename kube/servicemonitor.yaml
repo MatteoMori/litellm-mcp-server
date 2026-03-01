@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: litellm-mcp-server
+  namespace: mcp
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: litellm-mcp-server
+  namespaceSelector:
+    matchNames:
+      - mcp
+  endpoints:
+    - port: metrics
+      targetPort: 9090
+      interval: 30s
+      path: /metrics

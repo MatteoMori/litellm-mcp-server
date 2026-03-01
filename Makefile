@@ -24,7 +24,7 @@ docker-build: ## Build the Docker image
 .PHONY: docker-run
 docker-run: ## Run the Docker image (port 8000)
 	@echo "Running Docker image $(DOCKER_IMAGE)..."
-	docker run -p 8000:8000 $(DOCKER_IMAGE)
+	@docker run -p 8000:8000 -p 9090:9090 -e LITELLM_BASE_URL=http:\/\/localhost:8081 -e LITELLM_API_KEY="ThisIsAFakeKey" $(DOCKER_IMAGE)
 
 .PHONY: deploy
 deploy: docker-build ## Build and deploy to KIND cluster

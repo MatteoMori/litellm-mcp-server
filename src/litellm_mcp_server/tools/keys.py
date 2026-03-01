@@ -1,11 +1,14 @@
 from mcp_instance import mcp
 from http_client import http
 from helpers import fetch_teams_lookup
+from litellm_mcp_server.metrics.metrics import * # Our prometheus metrics
 
 
 @mcp.tool
 def get_keys_list() -> dict:
     """Return a list of all keys in the LiteLLM server, fetching all pages."""
+    TOOL_CALLS.labels(tool_name='get_keys_list').inc()
+
     all_keys = []
     page = 1
     page_size = 100

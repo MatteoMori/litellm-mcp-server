@@ -15,3 +15,21 @@ spec:
       port: 8000                 
       targetPort: 8000
   type: ClusterIP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: litellm-mcp-server-metrics
+  namespace: mcp
+  labels:
+   app: litellm-mcp-server           
+spec:
+  selector:
+    app: litellm-mcp-server       
+  ports:
+    - name: metrics
+      protocol: TCP              
+      port: 9090                 
+      targetPort: 9090
+  type: ClusterIP

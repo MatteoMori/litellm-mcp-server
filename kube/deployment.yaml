@@ -23,6 +23,9 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
+              name: http
+            - containerPort: 9090
+              name: metrics
           envFrom:
             - secretRef:
                 name: litellm-mcp-server-secret
